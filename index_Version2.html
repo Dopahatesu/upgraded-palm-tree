@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Unblocked Games Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Google Sites-like fonts and colors -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      background: #ffec70;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #ffd600;
+      color: #5f5f00;
+      padding: 24px 0 12px 0;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(140,140,0,0.09);
+    }
+    header h1 {
+      font-size: 2.1rem;
+      font-weight: 700;
+      margin: 0 0 6px 0;
+      letter-spacing: 0.02em;
+    }
+    main {
+      display: flex;
+      max-width: 1100px;
+      margin: 32px auto 0 auto;
+      padding: 0 18px;
+      min-height: 70vh;
+    }
+    .search-area {
+      width: 260px;
+      background: #fff36c;
+      border-radius: 13px;
+      margin-right: 28px;
+      box-shadow: 0 1px 6px rgba(140,140,0,0.12);
+      padding: 18px 16px;
+      height: fit-content;
+    }
+    .search-area label {
+      font-weight: 500;
+      color: #7c6c00;
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .search-area input[type="text"] {
+      width: 100%;
+      padding: 7px 10px;
+      font-size: 1rem;
+      border: 1.2px solid #ffe066;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      background: #fffde5;
+      color: #7c6c00;
+      outline: none;
+      transition: border 0.13s;
+    }
+    .search-area input[type="text"]:focus {
+      border-color: #ffd600;
+    }
+    .search-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      max-height: 250px;
+      overflow-y: auto;
+    }
+    .search-list li {
+      padding: 7px 0;
+      border-bottom: 1px solid #ffe066;
+      color: #7c6c00;
+      font-size: 1.01rem;
+      cursor: pointer;
+      transition: background 0.12s;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .search-list li:last-child {
+      border-bottom: none;
+    }
+    .search-list img {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      background: #ffe066;
+      object-fit: cover;
+    }
+    .cards {
+      flex: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 22px;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+    .card {
+      background: #fffde5;
+      border-radius: 10px;
+      box-shadow: 0 1px 6px rgba(140,140,0,0.10);
+      width: 150px;
+      min-height: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 13px 8px 10px 8px;
+      cursor: pointer;
+      transition: box-shadow 0.16s, background 0.14s;
+      text-align: center;
+      color: #7c6c00;
+    }
+    .card:hover {
+      background: #fff36c;
+      box-shadow: 0 4px 12px rgba(140,140,0,0.18);
+    }
+    .card img {
+      width: 55px;
+      height: 55px;
+      margin-bottom: 9px;
+      background: #ffe066;
+      border-radius: 7px;
+      object-fit: cover;
+    }
+    .card-title {
+      font-size: 1.08rem;
+      font-weight: 600;
+      color: #7c6c00;
+      margin-bottom: 0;
+      margin-top: 0;
+    }
+    footer {
+      text-align: center;
+      color: #b8a600;
+      font-size: 0.97rem;
+      margin-top: 60px;
+      padding-bottom: 15px;
+    }
+    /* Hide scrollbars on Chrome, Edge, Safari */
+    .search-list::-webkit-scrollbar { display: none; }
+    /* Hide scrollbar on Firefox */
+    .search-list { scrollbar-width: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Unblocked Games Hub</h1>
+  </header>
+  <main>
+    <aside class="search-area">
+      <label for="search-input">Search Games</label>
+      <input type="text" id="search-input" placeholder="Type game name...">
+      <ul class="search-list" id="search-list">
+        <!-- Search results will show here -->
+      </ul>
+    </aside>
+    <section class="cards" id="cards">
+      <!-- Example Game Card -->
+      <div class="card" data-title="Game Title">
+        <img src="https://cdn-icons-png.flaticon.com/512/3515/3515790.png" alt="Game Icon"/>
+        <div class="card-title">Game Title</div>
+      </div>
+      <div class="card" data-title="Game Title 2">
+        <img src="https://cdn-icons-png.flaticon.com/512/3515/3515790.png" alt="Game Icon"/>
+        <div class="card-title">Game Title 2</div>
+      </div>
+      <!-- Add more cards as needed -->
+    </section>
+  </main>
+  <footer>
+    Made to look like Google Sites · Add more games by copying a card!
+  </footer>
+  <script>
+    // Pull all cards and titles for search list
+    const cards = Array.from(document.querySelectorAll('.card'));
+    const searchList = document.getElementById('search-list');
+    const searchInput = document.getElementById('search-input');
+    function updateSearchList(filter = "") {
+      searchList.innerHTML = "";
+      let filtered = cards.filter(card =>
+        card.dataset.title.toLowerCase().includes(filter.toLowerCase())
+      );
+      filtered.forEach(card => {
+        const li = document.createElement('li');
+        const img = card.querySelector('img').cloneNode();
+        const title = card.dataset.title;
+        li.appendChild(img);
+        li.appendChild(document.createTextNode(title));
+        li.onclick = () => {
+          card.scrollIntoView({behavior: "smooth", block: "center"});
+          card.style.boxShadow = "0 0 0 3px #ffd600";
+          setTimeout(() => card.style.boxShadow = "", 700);
+        };
+        searchList.appendChild(li);
+      });
+      if (filtered.length === 0 && filter) {
+        const li = document.createElement('li');
+        li.textContent = "No games found";
+        searchList.appendChild(li);
+      }
+    }
+    searchInput.addEventListener("input", e => {
+      updateSearchList(e.target.value);
+    });
+    // Initial load
+    updateSearchList();
+  </script>
+</body>
+</html>
